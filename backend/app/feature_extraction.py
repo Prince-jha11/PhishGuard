@@ -10,6 +10,7 @@ from datetime import datetime
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from app.threat_feeds import statistical_report
+from datetime import datetime, timezone
 
 
 class FeatureExtraction:
@@ -255,31 +256,30 @@ class FeatureExtraction:
 
         # ---------------- DOMAIN AGE ----------------
 
+        
+
         try:
-            if w and w.creation_date:
+            creation = getattr(w, "creation_date", None)
 
-                creation = w.creation_date
+            if isinstance(creation, list):
+                creation = next((d for d in creation if isinstance(d, datetime)), None)
 
-                # handle list
-                if isinstance(creation, list):
-                    creation = next((d for d in creation if isinstance(d, datetime)), None)
+            if creation is None:
+                features["age_of_domain"] = -1
+                features["domain_age_days"] = None
+            elif isinstance(creation, datetime):
+                now = datetime.now(creation.tzinfo) if creation.tzinfo else datetime.now()
+                age_days = (now - creation).days
 
-                if isinstance(creation, datetime):
-                    age_days = (datetime.now() - creation).days
-
-                    # store BOTH values
-                    features["age_of_domain"] = 1 if age_days >= 365 else -1
-                    features["domain_age_days"] = age_days
-
-                else:
-                    features["age_of_domain"] = -1
-                    features["domain_age_days"] = None
-
+                features["age_of_domain"] = 1 if age_days >= 365 else -1
+                features["domain_age_days"] = age_days
             else:
                 features["age_of_domain"] = -1
                 features["domain_age_days"] = None
+                print(f"Unsupported creation_date type: {type(creation)} -> {creation}")
 
-        except:
+        except Exception as e:
+            print("Domain age calculation failed:", e)
             features["age_of_domain"] = -1
             features["domain_age_days"] = None
 
