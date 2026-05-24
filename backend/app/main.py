@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from threading import Thread
+from app.threat_feeds import load_threat_feeds
 from app.schema import URLRequest
 from app.predictor import predict_url
 from app.threat_feeds import load_threat_feeds
@@ -24,9 +25,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 @app.on_event("startup")
 def startup_event():
-    load_threat_feeds()
+    Thread(target=load_threat_feeds, daemon=True).start()
 
 @app.get("/")
 def home():
