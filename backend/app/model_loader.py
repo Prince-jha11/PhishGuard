@@ -8,10 +8,8 @@ def load_model():
 
     if not MODEL_PATH.exists():
         raise FileNotFoundError(
-            f"Model file not found at: {MODEL_PATH}"
+            f"Phishing model not found at: {MODEL_PATH}"
         )
 
     with open(MODEL_PATH, "rb") as f:
-        model = pickle.load(f)
-
-    return model
+        return pickle.load(f)
