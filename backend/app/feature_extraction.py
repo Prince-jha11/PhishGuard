@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup
 from app.threat_feeds import statistical_report
 from datetime import datetime, timezone
 
+extractor = tldextract.TLDExtract(cache_dir="/tmp")
+
 
 class FeatureExtraction:
 
@@ -25,7 +27,7 @@ class FeatureExtraction:
         if not hostname:
             return {}
 
-        ext = tldextract.extract(url)
+        ext = extractor(url)
 
         # ---------------- URL STRUCTURE ----------------
 
