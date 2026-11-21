@@ -41,6 +41,13 @@ def home():
 async def scan_url(data: URLRequest):
 
     prediction, probability, features, threat_source = predict_url(data.url)
+    print("========== SCAN DEBUG ==========")
+    print("URL:", data.url)
+    print("Prediction:", prediction)
+    print("Probability:", probability)
+    print("Statistical Report:", features.get("Statistical_report"))
+    print("Threat Source:", threat_source)
+    print("================================")
 
     prob = float(probability)
     threat_detected = bool(threat_source)
