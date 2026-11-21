@@ -331,7 +331,19 @@ class FeatureExtraction:
 
         # ---------------- STATISTICAL REPORT ----------------
 
-        stat_value, threat_source = statistical_report(url)
+        stat_result = statistical_report(url)
+
+        if (
+            isinstance(stat_result, tuple)
+            and len(stat_result) == 2
+        ):
+            stat_value, threat_source = stat_result
+        else:
+            print("Invalid threat-feed response:", stat_result)
+            stat_value, threat_source = 1, None
+        
+        features["Statistical_report"] = stat_value
+        features["Threat_Source"] = threat_source
 
         features["Statistical_report"] = stat_value
 
