@@ -15,7 +15,7 @@ origins = [
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "chrome-extension://*",
-    "https://phishguard-frontend-henna.vercel.app/index.html"
+    "https://phishguard-frontend-henna.vercel.app"
 ]
 
 app.add_middleware(
