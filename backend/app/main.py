@@ -14,7 +14,8 @@ origins = [
     "http://127.0.0.1:5173",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
-    "chrome-extension://*"
+    "chrome-extension://*",
+    "https://phish-guard-five-eta.vercel.app"
 ]
 
 app.add_middleware(
