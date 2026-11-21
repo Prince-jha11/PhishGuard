@@ -140,7 +140,7 @@ class FeatureExtraction:
         # ---------------- PAGE CONTENT ----------------
 
         try:
-            response = requests.get(url,timeout=5,headers={"User-Agent":"Mozilla/5.0"})
+            response = requests.get(url,timeout=5,headers={"User-Agent":"Mozilla/5.0"},timeout=5)
             soup = BeautifulSoup(response.text,"html.parser")
         except:
             soup = None
