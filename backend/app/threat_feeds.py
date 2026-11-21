@@ -39,10 +39,15 @@ def statistical_report(url):
     for bad in BAD_DOMAINS:
 
         if domain == bad or domain.endswith("." + bad):
+    
             source = THREAT_SOURCES.get(bad, "Threat Feed")
+    
+            print("THREAT MATCH FOUND")
+            print("Scanned domain:", domain)
+            print("Matched domain:", bad)
+            print("Feed source:", source)
+    
             return -1, source
-
-    return 1, None
 
 
 def load_threat_feeds():
