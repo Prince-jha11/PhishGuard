@@ -21,33 +21,32 @@ def normalize_domain(value):
         return None
 
 
+
 def statistical_report(url):
 
     domain = normalize_domain(url)
 
+    # Invalid domain: do not classify as malicious
     if not domain:
         return 1, None
 
-    url_lower = url.lower()
+    url_lower = url.strip().lower()
 
-    # check full URL match
+    # Check full URL match
     if url_lower in BAD_URLS:
         source = THREAT_SOURCES.get(domain, "Threat Feed")
         return -1, source
 
-    # check domain matches
+    # Check domain and subdomain matches
     for bad in BAD_DOMAINS:
 
         if domain == bad or domain.endswith("." + bad):
-    
             source = THREAT_SOURCES.get(bad, "Threat Feed")
-    
-            print("THREAT MATCH FOUND")
-            print("Scanned domain:", domain)
-            print("Matched domain:", bad)
-            print("Feed source:", source)
-    
             return -1, source
+
+    # No threat found
+    return 1, None
+
 
 
 def load_threat_feeds():
