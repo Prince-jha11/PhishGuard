@@ -18,7 +18,7 @@ async function analyzeURL() {
 
 async function fetchRisk(url) {
     try {
-        const response = await fetch("http://127.0.0.1:8000/scan-url", {
+        const response = await fetch("https://phish-guard-five-eta.vercel.app/scan-url", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
