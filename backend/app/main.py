@@ -4,7 +4,7 @@ from threading import Thread
 from app.threat_feeds import load_threat_feeds
 from app.schema import URLRequest
 from app.predictor import predict_url
-from app.threat_feeds import load_threat_feeds
+
 
 app = FastAPI()
 
